@@ -81,6 +81,7 @@ Otherwise: will read the code from your machine
 Remember: **it is not a problem if you don't complete your test**, as long as you keep our WTFs/minutes at a minimum.
 
 But most important:
+
 ![programmer](programmer.png)
 
 
