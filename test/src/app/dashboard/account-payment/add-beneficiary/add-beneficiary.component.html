@@ -1,0 +1,74 @@
+<div class="container-fluid p-5">
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="w-50">
+      <h3 class="text-center">Add Beneficiary</h3>
+      <div class="form-group mt-5">
+        <div class="form-group mb-4 mt-2">
+          <select class="form-select" aria-label="Default select example" disabled>
+            <option selected>United Kingdom</option>
+            <option>Italy</option>
+          </select>
+        </div>
+        <div class="form-group mb-4 mt-2">
+          <select class="form-select" aria-label="Default select example" (change)="getCompanyType($event)">
+            <option selected>Type</option>
+            <option>company</option>
+            <option>individual</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group mb-4 mt-2" *ngIf="selectedCompanyType == 'company' ">
+        <input class="form-control" placeholder="Beneficiary Company Name">
+      </div>
+      <div *ngIf="selectedCompanyType == 'individual' ">
+        <div class="form-group mb-4 mt-2">
+          <input class="form-control" placeholder="Beneficiary First Name">
+        </div>
+        <div class="form-group mb-4 mt-2">
+          <input class="form-control" placeholder="Beneficiary Last name">
+        </div>
+      </div>
+      <div class="payment-tabs" *ngIf="selectedCompanyType">
+        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="priority-tab" data-bs-toggle="tab" data-bs-target="#priority"
+                    type="button"
+                    role="tab" aria-controls="priority" aria-selected="true">International Payment
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="regular-tab" data-bs-toggle="tab" data-bs-target="#regular" type="button"
+                    role="tab" aria-controls="regular" aria-selected="false">Local Payment
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="priority" role="tabpanel" aria-labelledby="priority-tab">
+            <div *ngFor="let p of paymentInformation">
+              <div *ngIf="p.payment_type === 'priority' && p.beneficiary_entity_type === selectedCompanyType">
+                <div class="form-group mb-4 mt-2" *ngFor="let f of p.fields | keyvalue">
+                  <input class="form-control" [placeholder]="f.key">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="regular" role="tabpanel" aria-labelledby="regular-tab">
+            <div *ngFor="let p of paymentInformation">
+              <div *ngIf="p.payment_type === 'regular' && p.beneficiary_entity_type === selectedCompanyType">
+                <div *ngFor="let f of p.fields | keyvalue">
+                  <div class="form-group mb-4 mt-2">
+                    <input class="form-control" [placeholder]="f.key">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between align-content-around">
+        <button type="button" class="btn btn-lg btn-outline-danger">Cancel</button>
+        <button type="button" class="btn btn-lg btn-outline-success">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
