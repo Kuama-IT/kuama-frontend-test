@@ -8,10 +8,9 @@ import {FormArray, FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./account-payment.component.scss']
 })
 export class AccountPaymentComponent implements OnInit {
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+constructor() {
+}
+ngOnInit() {
+}
 
 }

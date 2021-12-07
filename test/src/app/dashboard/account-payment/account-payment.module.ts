@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {AccountPaymentRoutingModule} from './account-payment-routing.module';
 import {AccountPaymentComponent} from './account-payment.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AddBeneficiaryComponent } from './add-beneficiary/add-beneficiary.component';
 import {AppModule} from "../../app.module";
 
@@ -16,6 +16,7 @@ import {AppModule} from "../../app.module";
     CommonModule,
     AccountPaymentRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class AccountPaymentModule {
