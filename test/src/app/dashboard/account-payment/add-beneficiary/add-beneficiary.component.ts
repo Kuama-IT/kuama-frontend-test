@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AccountPaymentService} from "../../../api/services/account-payment/account-payment.service";
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-add-beneficiary',
@@ -18,52 +17,37 @@ export class AddBeneficiaryComponent implements OnInit {
   constructor(private ac: AccountPaymentService, private fb: FormBuilder) {
   }
 
-// As I dont understand I should make it fixed or get from json fields I did both
 
   ngOnInit(): void {
     this.paymentForm = this.fb.group({
-      fields: this.fb.group({
-        bic_swift: ['', [Validators.required]],
-        beneficiary_address: ['', [Validators.required]],
-        beneficiary_city: ['', [Validators.required]],
-        beneficiary_last_name: ['', [Validators.required]],
-        beneficiary_first_name: ['', [Validators.required]],
-        beneficiary_company_name: ['', [Validators.required]],
-        iban: ['', [Validators.required]],
-      }),
-
-      //here Ill make FormArray, to add here fields from json
-      // fields: this.fb.array([])
-
+      beneficiary_entity_type: [null, [Validators.required]],
+      fields: this.fb.array([]),
     });
 
-    // Getting data form Json
-    // this.ac.getPaymentDetails().subscribe((data: any) => {
-    //   this.paymentInfo = data;
-    // })
+    this.ac.getPaymentDetails().subscribe((data: any) => {
+      this.paymentInfo = data;
+    })
   }
-
 
   getCompanyType(e: any) {
     this.selectedCompanyType = e.target.value;
-
-    //Here Ill filter data to understand it is individual or company
-
-    //   const paymentInformation = this.paymentInfo.filter((s: any) => s.beneficiary_entity_type.includes(e.target.value));
-    //   this.filterData(paymentInformation)
+    const paymentInformation = this.paymentInfo.filter((s: any) => s.beneficiary_entity_type.includes(e.target.value));
+    this.fields.clear();
+    this.filterData(paymentInformation)
   }
 
 
-  // filterData(data: any) {
+  filterData(data: any) {
+    for (const d of data) {
+      if (d.beneficiary_entity_type === this.selectedCompanyType && d.payment_type === 'priority') {
+        const fields = this.paymentForm.get('fields') as FormArray;
+        fields.push(this.fb.group(d.fields));
+        this.paymentForm.reset()
+      }
+    }
+  }
 
-  // and here Ill push in formArray
-
-  //   for (const d of data) {
-  //     if (d.beneficiary_entity_type === this.selectedCompanyType && d.payment_type === 'priority') {
-  //       this.paymentForm.value.fields.push(d.fields)
-  //     }
-  //   }
-  // }
-
-
+  get fields(): FormArray {
+    return this.paymentForm.get("fields") as FormArray;
+  }
 }
