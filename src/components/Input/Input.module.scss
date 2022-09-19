@@ -1,0 +1,50 @@
+@use "../../styles/variables" as vars;
+@use "../../styles/mixins" as mixins;
+
+.inputWrapper {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 1rem 1rem 0 1rem;
+
+  span {
+    width: 100%;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  input {
+    @include mixins.transitionall(0.2s);
+    width: 100%;
+    text-transform: capitalize;
+    background-color: vars.$color_input-background;
+    border: 1px solid vars.$color_input-border;
+    border-radius: vars.$size_input-radius;
+    font-size: vars.$size_base-font;
+    color: vars.$color-text;
+    padding: 1rem 0.8rem;
+
+    &::placeholder {
+      color: rgba(vars.$color-text, 0.3);
+    }
+
+    &:focus,
+    &:hover {
+      outline: none;
+      box-shadow: 0 0 0 0.3rem rgba(vars.$color_highlight, 0.6);
+      border: 1px solid vars.$color_highlight;
+    }
+
+    &.valid {
+      background-color: vars.$color-valid;
+      border: 1px solid vars.$color-valid;
+      box-shadow: 0 0 0 0.3rem rgba(darken(vars.$color-valid, 20), 0.8);
+    }
+
+    &.invalid {
+      background-color: vars.$color-invalid;
+      border: 1px solid vars.$color-invalid;
+      box-shadow: 0 0 0 0.3rem rgba(darken(vars.$color_invalid, 30), 0.8);
+    }
+  }
+}

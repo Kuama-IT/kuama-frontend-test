@@ -1,0 +1,105 @@
+@use "/src/styles/reset";
+@use "/src/styles/variables" as vars;
+@use "/src/styles/mixins" as mixins;
+@use "/src/styles/fonts";
+
+:root {
+  font-size: 62.5%;
+  font-family: "Work Sans", Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: vars.$color_body-background;
+  font-size: vars.$size_base-font;
+  color: vars.$color-text;
+  font-weight: 400;
+
+  background: linear-gradient(
+    45deg,
+    vars.$color_body-gradient-start,
+    vars.$color_body-gradient-end
+  );
+}
+
+h3 {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid vars.$color_highlight;
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 2rem 1rem 1rem 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.form-wrapper {
+  margin-top: 3rem;
+  padding: 2rem 1.5rem;
+  background-color: rgba(vars.$color_body-background, 0.9);
+  border-radius: vars.$size_input-radius * 2;
+  box-shadow: 0 0 0.1rem 0.1rem rgba(vars.$color_body-background, 1),
+    0 0 2rem 0 rgba(#4d4b4b, 0.3), 0 0 2rem 0 rgba(#ff00ff, 0.3);
+}
+
+.buttons-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0 0 0;
+}
+
+.button {
+  @include mixins.transitionall(0.1s);
+  cursor: pointer;
+  padding: 1rem 2rem;
+  margin: 0.2rem 0.2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  background-color: vars.$color_button-background;
+  border: 1px solid vars.$color_button-border;
+  box-shadow: 0 0 0.1rem 0.1rem rgba(vars.$color_button-border, 1);
+  border-radius: vars.$size_input-radius * 2.5;
+
+  color: vars.$color_button-text;
+
+  &:hover {
+    padding: 1.2rem 2.2rem;
+    margin: 0;
+    background-color: lighten(vars.$color_button-background, 10);
+    box-shadow: 0 0 0.1rem 0.1rem rgba(vars.$color_button-border, 1),
+      0 0 1.5rem 0 rgba(#4d4b4b, 0.8);
+  }
+  &:active {
+    padding: 1rem 2rem;
+    margin: 0.2rem 0.2rem;
+    box-shadow: 0 0 0.1rem 0.1rem rgba(vars.$color_button-border, 1),
+      0 0 1rem 0 rgba(#4d4b4b, 0.8);
+  }
+
+  &_alt {
+    cursor: pointer;
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+@media screen and (max-width: 58rem) {
+  .form-wrapper {
+    margin-top: 0;
+    border-radius: 0;
+    min-width: 100%;
+    min-height: 100vh;
+  }
+}
