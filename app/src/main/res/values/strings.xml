@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Kuama Test</string>
+    <string name="beneficiary_title">Add beneficiary</string>
+    <string name="payment_method_title">Select a payment method:</string>
+    <string name="entity_type_hint">Entity Type</string>
+    <string name="entity_type">Select the entity type:</string>
+    <string name="invalid_input">Invalid Input</string>
+</resources>
