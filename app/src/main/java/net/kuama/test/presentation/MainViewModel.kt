@@ -1,16 +1,20 @@
 package net.kuama.test.presentation
 
 import android.content.Context
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableArrayMap
 import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import com.google.gson.JsonObject
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import net.kuama.test.R
 import net.kuama.test.data.PaymentRepository
 import net.kuama.test.data.models.PaymentModel
+import net.kuama.test.view.utils.PreferencesKeys
+import net.kuama.test.view.utils.getStringFromPreferences
+import net.kuama.test.view.utils.showInputDialog
+import net.kuama.test.view.utils.storeValueInSharedPreferences
 import java.lang.ref.WeakReference
 
 class MainViewModel(private val repository: PaymentRepository) : ViewModel() {
@@ -22,7 +26,7 @@ class MainViewModel(private val repository: PaymentRepository) : ViewModel() {
    val showFieldsLayout = ObservableBoolean(false)
    val paymentFieldsJson = ObservableArrayMap<String, String>()
    val beneficiaryDetailsFields = ObservableArrayMap<String, String>()
-   val paymentTypesSpinnerList : ObservableArrayList<String> = ObservableArrayList()
+   val paymentTypesSpinnerList: ObservableArrayList<String> = ObservableArrayList()
    val entityTypes = ObservableArrayList<String>()
 
    private var selectedPaymentType: String = ""
@@ -38,9 +42,12 @@ class MainViewModel(private val repository: PaymentRepository) : ViewModel() {
 
    private fun fetchData() {
       weakContext.get()?.let { ctx ->
-         paymentsList = repository.getData(ctx)?.paymentsType
-         populateData()
-         return
+         viewModelScope.launch {
+            repository.getData(ctx).collect {
+               paymentsList = it?.paymentsType
+               populateData()
+            }
+         }
       }
    }
 
@@ -55,6 +62,8 @@ class MainViewModel(private val repository: PaymentRepository) : ViewModel() {
          entityTypes.clear()
          entityTypes.addAll(it)
       }
+      showFieldsLayout.set(false)
+      showFormLayout.set(false)
    }
 
    fun onDropDownItemSelected(item: String) {
@@ -66,7 +75,7 @@ class MainViewModel(private val repository: PaymentRepository) : ViewModel() {
 
    private fun showEntityDetails() {
       try {
-         paymentsList?.first {it.BeneficiaryEntityType == selectedEntityType }?.also {
+         paymentsList?.first { it.BeneficiaryEntityType == selectedEntityType }?.also {
             beneficiaryDetailsFields.clear()
             val fields = it.paymentFields
             fields.keySet().forEach { key ->
@@ -104,4 +113,29 @@ class MainViewModel(private val repository: PaymentRepository) : ViewModel() {
          e.printStackTrace()
       }
    }
+
+   fun onToolbarMenuItemClicked(itemId: Int): Boolean {
+      return when (itemId) {
+         R.id.menu_url -> {
+            val context = weakContext.get()
+            val savedUrl = context?.getStringFromPreferences(PreferencesKeys.JSON_URL)
+            context?.showInputDialog(R.string.change_url_dialog_title,
+               R.string.change_url_dialog_msg, savedUrl) {
+               context.storeValueInSharedPreferences(PreferencesKeys.JSON_URL, it)
+            }
+            true
+         }
+         R.id.menu_refresh -> {
+            fetchData()
+            true
+         }
+         else -> false
+      }
+   }
+
+   fun onOnlineSwitchCheckedChanged(checked: Boolean) {
+      weakContext.get()?.storeValueInSharedPreferences(PreferencesKeys.FETCH_TYPE, checked)
+      fetchData()
+   }
+
 }

@@ -3,8 +3,11 @@ package net.kuama.test.view
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.google.android.material.tabs.TabLayout
+import net.kuama.test.R
 import net.kuama.test.databinding.ActivityMainBinding
 import net.kuama.test.presentation.MainViewModel
+import net.kuama.test.view.utils.PreferencesKeys
+import net.kuama.test.view.utils.getBooleanFromPreferences
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -20,6 +23,14 @@ class MainActivity : ComponentActivity() {
       setupInitialViewState()
    }
 
+   private fun setupToolbar() {
+      binding.toolbar.setTitle(R.string.app_name)
+      binding.toolbar.inflateMenu(R.menu.main_menu)
+      binding.toolbar.setOnMenuItemClickListener {
+         mainViewModel.onToolbarMenuItemClicked(it.itemId)
+      }
+   }
+
    /** Most of the data for the activity layout is populate in views by data binding
     * directly from viewModel and they are set in the @BindingAdapters.kt file*/
    private fun setupBindings() {
@@ -29,8 +40,10 @@ class MainActivity : ComponentActivity() {
    }
 
    private fun setupInitialViewState() {
+      setupToolbar()
       setupDropDown()
       setupTabLayout()
+      setupOnlineSwitch()
    }
 
    private fun setupDropDown() {
@@ -54,6 +67,13 @@ class MainActivity : ComponentActivity() {
          override fun onTabReselected(tab: TabLayout.Tab?) {
          }
       })
+   }
+
+   private fun setupOnlineSwitch() {
+      binding.paymentOnlineSwitch.setOnCheckedChangeListener { _, checked ->
+         mainViewModel.onOnlineSwitchCheckedChanged(checked)
+      }
+      binding.paymentOnlineSwitch.isChecked = getBooleanFromPreferences(PreferencesKeys.FETCH_TYPE)
    }
 
 }
