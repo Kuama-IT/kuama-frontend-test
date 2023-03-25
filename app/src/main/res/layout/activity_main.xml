@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="net.kuama.test.presentation.MainViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:theme="@style/AppBarOverlay"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:titleMarginStart="10dp" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/payment_online_switch"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/online_switch_text"
+                    android:paddingHorizontal="10dp"
+                    app:switchPadding="10dp"
+                    tools:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/payment_layout_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/beneficiary_title"
+                    android:textSize="22sp"
+                    app:layout_constraintTop_toBottomOf="@id/payment_online_switch"
+                    app:layout_constraintBottom_toTopOf="@id/payment_type_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/payment_type_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/entity_type"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@id/payment_type_text_input"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/payment_layout_title" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/payment_type_text_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/entity_type_hint"
+                    app:layout_constraintBottom_toTopOf="@id/payment_form_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/payment_type_title">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/payment_type_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dropDownItems="@{viewModel.entityTypes}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/payment_form_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.showFormLayout ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toBottomOf="@id/payment_type_text_input">
+
+                    <LinearLayout
+                        android:id="@+id/payment_beneficiary_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.showFieldsLayout ? View.VISIBLE : View.GONE}"
+                        app:fieldsList="@{viewModel.beneficiaryDetailsFields}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/payment_method_title"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/payment_type_tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_marginTop="10dp"
+                        app:tabs="@{viewModel.paymentTypesSpinnerList}" />
+
+                    <LinearLayout
+                        android:id="@+id/payment_form_fields"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.showFieldsLayout ? View.VISIBLE : View.GONE}"
+                        app:fieldsList="@{viewModel.paymentFieldsJson}" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

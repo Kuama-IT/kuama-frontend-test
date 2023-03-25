@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Kuama Test</string>
+    <string name="beneficiary_title">Add beneficiary</string>
+    <string name="payment_method_title">Select a payment method:</string>
+    <string name="entity_type_hint">Entity Type</string>
+    <string name="entity_type">Select the entity type:</string>
+    <string name="invalid_input">Invalid Input</string>
+    <string name="menu_url">Set json url</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="action_set">Set</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="change_url_dialog_title">Change json url</string>
+    <string name="change_url_dialog_msg">Enter the json url you wish to populate the form from it (Just enter the directory path where the data.json is stored)</string>
+    <string name="online_switch_text">Fetch data online?</string>
+</resources>
