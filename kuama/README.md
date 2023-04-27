@@ -1,46 +1,91 @@
-# Getting Started with Create React App
+## Kuama Developer Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Given the following json
 
-## Available Scripts
+```json
+{
+  "details": [
+    {
+      "payment_type": "priority",
+      "beneficiary_entity_type": "individual",
+      "fields": {
+        "beneficiary_last_name": "^.{1,255}",
+        "beneficiary_address": "^.{1,255}",
+        "iban": "([A-Z0-9]\\s*){15,34}",
+        "beneficiary_city": "^.{1,255}",
+        "beneficiary_first_name": "^.{1,255}",
+        "bic_swift": "^[0-9A-Z]{8}$|^[0-9A-Z]{11}$"
+      }
+    },
+    {
+      "payment_type": "priority",
+      "beneficiary_entity_type": "company",
+      "fields": {
+        "beneficiary_company_name": "^.{1,255}",
+        "beneficiary_address": "^.{1,255}",
+        "iban": "([A-Z0-9]\\s*){15,34}",
+        "beneficiary_city": "^.{1,255}",
+        "bic_swift": "^[0-9A-Z]{8}$|^[0-9A-Z]{11}$"
+      }
+    },
+    {
+      "payment_type": "regular",
+      "beneficiary_entity_type": "individual",
+      "fields": {
+        "iban": "([A-Z0-9]\\s*){15,34}"
+      }
+    },
+    {
+      "payment_type": "regular",
+      "beneficiary_entity_type": "company",
+      "fields": {
+        "iban": "([A-Z0-9]\\s*){15,34}"
+      }
+    }
+  ]
+}
+```
+Create a UI that will show
+- [ ] a dropdown that will show all the different `beneficiary_entity_type` options  (given the current json, the dropdown should contain `individual` and `company`)
+- [ ] when the dropdown changes its value (the user selects an option), the following should be shown:
+    - [ ] a section for each `payment_type` of the selected `beneficiary_entity_type`
+    - [ ] each section should contain N inputs, as many as the one listed under the key `fields`
+    - [ ] following fields, when needed, should be presented in a separate section
+      - `"beneficiary_first_name"`
+      - `"beneficiary_last_name"`
+      - `"beneficiary_company_name"`
 
-In the project directory, you can run:
 
-### `yarn start`
+An example of the final result can be seen [here](https://share.vidyard.com/watch/7YmoyYbmZwHbjbTD4qCWK1?)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Style the UI as you prefer, and use any framework you prefer
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+If short on time, at least print the list of strings that should be used in a log of your choosing.
 
-### `yarn test`
+## Bonus points
+This is not a list to be followed top-bottom, just some enhancements you can do to show off 🙌 🚀
+- [ ] Store the json in a file and read it
+- [ ] Serve the json from a restful api
+- [ ] Add some transitions / animations
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to deliver
+If you know how: clone this repository, create a separate branch and make a PR
 
-### `yarn build`
+Otherwise: will read the code from your machine
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## What will be rated?
+- Code readability
+- How you structure your project
+- WTFs/minute
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Remember: **it is not a problem if you don't complete your test**, as long as you keep our WTFs/minutes at a minimum.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+And remember:
 
-### `yarn eject`
+![programmer](programmer.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Have fun!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+With ♥️ from Kuama folks
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
