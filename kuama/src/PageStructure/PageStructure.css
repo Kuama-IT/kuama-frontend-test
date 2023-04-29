@@ -33,6 +33,7 @@ li {
 
 .sidemenu_label {
   font-weight: 700;
+  font-size: 0.8em;
 }
 
 /* main div {
@@ -52,4 +53,16 @@ li {
 
 .dropdown {
   text-align: center;
+}
+
+.header {
+  text-align: center;
+  font-weight: 800;
+  font-size: 3em;
+}
+
+.company_form,
+.individual_form {
+  text-align: center;
+  margin-top: 8em;
 }
