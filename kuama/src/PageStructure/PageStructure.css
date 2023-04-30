@@ -1,0 +1,68 @@
+#components-layout-demo-responsive .logo {
+  height: 100%;
+  margin: 20px;
+}
+
+.ant-layout-sider.ant-layout-sider-dark {
+  height: 1000px;
+  background-color: rgb(164, 203, 231);
+  width: 15em;
+}
+
+.company_logo {
+  height: 3em;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-menu-dark,
+:where(.css-dev-only-do-not-override-yp8pcc).ant-menu-dark > .ant-menu {
+  color: black;
+  background: none;
+}
+
+.logo ul {
+  margin: 3em;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-menu {
+  margin-top: 1em;
+}
+
+li {
+  margin-bottom: 1em !important;
+}
+
+.sidemenu_label {
+  font-weight: 700;
+  font-size: 0.8em;
+}
+
+/* main div {
+  min-height: 800px !important;
+} */
+
+.footer_text {
+  font-weight: 800;
+  font-size: 1.7em;
+}
+
+:where(.css-dev-only-do-not-override-yp8pcc).ant-layout
+  .ant-layout-sider-zero-width-trigger {
+  background-color: rgb(164, 203, 231);
+  color: black;
+}
+
+.dropdown {
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+  font-weight: 800;
+  font-size: 3em;
+}
+
+.company_form,
+.individual_form {
+  text-align: center;
+  margin-top: 8em;
+}
